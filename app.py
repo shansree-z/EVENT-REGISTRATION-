@@ -1,27 +1,35 @@
 import streamlit as st
 import requests
 
-# UI Styling
+# 1. VISUALS: Bold Red/Black Gradient + HIDING GITHUB BAR
+st.set_page_config(page_title="ShanEventz", layout="centered")
+
 st.markdown("""
-<style>
-.stApp { background: linear-gradient(135deg, #000000 0%, #8b0000 100%); color: white; }
-[data-testid="stForm"] {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    border: 1px solid #ff4b4b;
-    padding: 25px;
-}
-label { color: #ff4b4b !important; font-weight: bold; }
-</style>
-""", unsafe_allow_html=True)
+    <style>
+    /* Hides the GitHub 'Fork' and Streamlit header */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+
+    /* Your Red and Black Theme */
+    .stApp { background: linear-gradient(135deg, #000000 0%, #8b0000 100%); color: white; }
+    [data-testid="stForm"] {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        border: 1px solid #ff4b4b;
+        padding: 25px;
+    }
+    label { color: #ff4b4b !important; font-weight: bold; }
+    </style>
+    """, unsafe_allow_html=True)
 
 st.title("ShanEventz Registration")
 
-# Submission URL
+# 2. DATA STORAGE (Google Form POST Method)
 FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSc88KKudFh42JScl6jNf_mchbespeaIChDLrv7OSmMfYmx1uA/formResponse"
 
-with st.form("shan_form"):
+with st.form("registration_form"):
     col1, col2 = st.columns(2)
     with col1:
         fname = st.text_input("First Name")
@@ -38,6 +46,7 @@ with st.form("shan_form"):
 
     if st.form_submit_button("REGISTER NOW"):
         if fname and email:
+            # Mapping to your Form IDs
             form_payload = {
                 "entry.290432123": fname,
                 "entry.37629806": lname,
@@ -45,15 +54,16 @@ with st.form("shan_form"):
                 "entry.1720808553": str(dob),
                 "entry.743410951": phone,
                 "entry.1526759683": email,
-                "entry.1830788331": tech,
-                "entry.1742901975": non_tech
+                "entry.1830788331": ", ".join(tech),
+                "entry.1742901975": ", ".join(non_tech)
             }
             try:
+                # Sending the request
                 requests.post(FORM_URL, data=form_payload)
-                st.success(f"Successfully Registered, {fname}!")
+                st.success(f"🎉 Success! {fname}, you are registered.")
                 st.balloons()
             except:
-                st.error("There was an issue with the submission.")
+                st.error("Submission error. Please try again.")
         else:
-            st.error("Please fill in the required fields.")
+            st.error("Required: First Name & Email.")
             
