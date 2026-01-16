@@ -1,22 +1,13 @@
 import streamlit as st
 import requests
 
-# 1. PAGE CONFIG & UI STYLING (Hiding GitHub/Header + Red & Black Theme)
+# 1. UI & THEME (Hiding GitHub chrome for a clean look)
 st.set_page_config(page_title="ShanEventz", layout="centered")
 
 st.markdown("""
     <style>
-    /* Hides the GitHub Fork icon and Streamlit header */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
-    #GithubIcon {visibility: hidden;}
-
-    /* Bold Red and Black Theme */
-    .stApp { 
-        background: linear-gradient(135deg, #000000 0%, #8b0000 100%); 
-        color: white; 
-    }
+    header, footer, #MainMenu, #GithubIcon {visibility: hidden;}
+    .stApp { background: linear-gradient(135deg, #000000 0%, #8b0000 100%); color: white; }
     [data-testid="stForm"] {
         background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(10px);
@@ -30,7 +21,7 @@ st.markdown("""
 
 st.title("ShanEventz Registration")
 
-# 2. GOOGLE FORM SUBMISSION URL
+# Submission endpoint
 FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSc88KKudFh42JScl6jNf_mchbespeaIChDLrv7OSmMfYmx1uA/formResponse"
 
 with st.form("registration_form", clear_on_submit=True):
@@ -50,7 +41,7 @@ with st.form("registration_form", clear_on_submit=True):
 
     if st.form_submit_button("REGISTER NOW"):
         if fname and email:
-            # Data Mapping (Joining lists into strings for Google Forms)
+            # Check these IDs against your 'Inspect' results
             form_payload = {
                 "entry.290432123": fname,
                 "entry.37629806": lname,
@@ -62,19 +53,18 @@ with st.form("registration_form", clear_on_submit=True):
                 "entry.1742901975": ", ".join(non_tech)
             }
             
-            # Browser Headers to prevent Google from blocking the request
             headers = {'Referer': FORM_URL, 'User-Agent': "Mozilla/5.0"}
             
             try:
-                response = requests.post(FORM_URL, data=form_payload, headers=headers)
-                # Success if code is 200 or it redirects
-                if response.status_code == 200:
+                # We expect a 200 (Success) or 302 (Redirect to success page)
+                r = requests.post(FORM_URL, data=form_payload, headers=headers, timeout=10)
+                if r.status_code in [200, 302]:
                     st.success(f"🎉 Success! {fname}, your registration is recorded.")
                     st.balloons()
                 else:
-                    st.error("Submission failed. Ensure 'Collect Email' is OFF in Form Settings.")
-            except:
-                st.error("Network issue. Please try again.")
+                    st.error(f"Error {r.status_code}: Please check 'Collect Email' is OFF in settings.")
+            except Exception as e:
+                st.error("Connection error. Please check your internet.")
         else:
-            st.error("Please fill in First Name and Email.")
+            st.error("Please fill in the required fields.")
             
