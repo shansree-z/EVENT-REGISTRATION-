@@ -1,33 +1,38 @@
-#  ShanEventz Registration System
+#  ShanEventz Registration Website 
 
-![Streamlit Banner](https://static.streamlit.io/images/brand/streamlit-logo-secondary-colormark-darktext.png)
+[![Python](https://img.shields.io/badge/PYTHON-3.9+-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/STREAMLIT-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![GitHub](https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
 
-> **A premium, high-performance event registration portal.**
-
-## 🌟 Project Overview
-ShanEventz is a modern web application built to streamline event registrations. It features a high-impact **Red & Black Gradient UI** with glassmorphism effects, providing a "MAANG-level" user experience.
+> **A high-performance, serverless event registration portal with a premium Glassmorphism UI.**
 
 ---
 
-## 🚀 Key Features
-* **Modern Branding:** Custom CSS overrides to hide default GitHub headers and Streamlit menus.
-* **Smart Data Pipeline:** Seamlessly captures user data and syncs it to a Google Sheets backend.
-* **Validation:** Real-time field validation for names, emails, and event selections.
-* **Responsive Architecture:** Fully functional on mobile, tablet, and desktop browsers.
+## Project Overview
+ShanEventz is a custom-branded web application designed for seamless attendee registration. By integrating a **Streamlit** frontend with a **Google Forms** backend, the system achieves a secure, low-latency data pipeline without the need for expensive database hosting.
 
-## 🛠️ Technical Stack
-* **Language:** Python 3.x
-* **Framework:** [Streamlit](https://streamlit.io/)
-* **Transport:** Python `requests` (HTTP POST)
-* **Storage:** Google Forms & Google Sheets
+---
 
-## 📁 Repository Structure
-* `app.py`: The core application logic and UI styling.
-* `requirements.txt`: Project dependencies.
-* `README.md`: Technical documentation and setup guide.
+##  Key Features
+* **Modern Aesthetic:** Bold Red & Black gradient background with Glassmorphism UI effects.
+* **White-Label Experience:** Custom CSS overrides to hide default Streamlit headers and GitHub branding.
+* **Smart Data Pipeline:** Real-time data synchronization with Google Sheets via HTTP POST requests.
+* **Categorized Selection:** Multiselect interface for Technical and Non-Technical event tracks.
 
-## ⚙️ How to Run Locally
+## Technical Architecture
+This project follows a **Serverless Architecture**:
+* **Frontend:** [Streamlit](https://streamlit.io/) (Python) for UI rendering and state management.
+* **Transport:** Python `requests` library for secure data transmission.
+* **Backend Storage:** Google Forms API (formResponse) & Google Sheets for data persistence.
+
+
+## 🗂️Repository Contents
+* `app.py`: The core application script featuring custom CSS and submission logic.
+* `requirements.txt`: Necessary dependencies (`streamlit`, `requests`).
+* `README.md`: Technical documentation and architecture overview.
+
+## ⚙️ Setup & Installation
 1. **Clone the repo:**
    ```bash
-   git clone [https://github.com/YourUsername/EVENT-REGISTRATION.git](https://github.com/YourUsername/EVENT-REGISTRATION.git)
+   git clone [https://github.com/shansree-z/event-registration.git](https://github.com/shansree-z/event-registration.git)
    
